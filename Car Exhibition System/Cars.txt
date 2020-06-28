@@ -1,0 +1,4 @@
+Manufacture Company      Model                    Release year             Cost            No.  
+
+test 1                   t1                       2020                     200000          5    
+test 2                   t2                       2021                     300000          5    
