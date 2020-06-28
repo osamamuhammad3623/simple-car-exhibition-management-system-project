@@ -9,7 +9,7 @@
 - Add a car/ employee/ sale.
 - Remove an employee's info.
 - Search for a specific car/ employee.
-- Change access password.
+- Change access password. //the last stored password is "osama"
 
 ------
 *Car info:
