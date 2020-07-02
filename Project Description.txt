@@ -10,6 +10,7 @@
 - Remove an employee's info.
 - Search for a specific car/ employee.
 - Change access password. //the last stored password is "osama"
+- Organize and store the data in text files.
 
 ------
 *Car info:
