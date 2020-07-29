@@ -311,6 +311,7 @@ Main_Menu:
 					setw(10) << left << "Company" <<
 					setw(10) << left << "Model" << 
 					setw(10) << left << "Release year" <<
+					setw(10) << left << "Price" <<
 					setw(15) << left << "Date" <<
 					setw(15) << left << "Time" << endl;
 				sales_file << endl;
@@ -337,7 +338,12 @@ Main_Menu:
 				string soldCarReleaseYear; getline(cin, soldCarReleaseYear);
 				sale_list[j].sold_car_release_year = soldCarReleaseYear;
 				cout << endl;
-
+				
+				space4(); cout << "Price : ";
+				short price; cin >> price;
+				sale_list[j].price = price;
+				cout << endl;
+				
 				space4(); cout << "Date : ";
 				string date; getline(cin, date);
 				sale_list[j].date = date;
@@ -352,6 +358,7 @@ Main_Menu:
 					setw(10) << left << sale_list[j].sold_car_company <<
 					setw(10) << left << sale_list[j].sold_car_model <<
 					setw(10) << left << sale_list[j].sold_car_release_year <<
+					setw(10) << left << sale_list[j].price <<
 					setw(15) << left << sale_list[j].date <<
 					setw(15) << left << sale_list[j].time << endl;
 
