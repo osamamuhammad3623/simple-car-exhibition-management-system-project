@@ -7,7 +7,9 @@ using namespace std;
 struct Sales {
 
 	string client_name;
-	string sold_car_info; // company, model and release year are all stored here
+	string sold_car_company;
+	string sold_car_model;
+	string sold_car_release_year;
 	string date;
 	string time;
 	
