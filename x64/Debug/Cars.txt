@@ -1,4 +1,0 @@
-     Manufacture Company      Model                    Release year             Cost            No.  
-
-1    BMW                      X6                       2020                     350000          5    
-1    MERCEDES                 C200                     2020                     650000          4    
