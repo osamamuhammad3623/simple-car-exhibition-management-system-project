@@ -13,8 +13,9 @@ using namespace std;
 // FUNCTIONS
 
 void header() {
+	// the program header
 	system("cls");
-	cout << "\t\t\t\t\t\t ***Car Exhibition System***" << endl;
+	cout << "\t\t\t\t\t ***Exhibition Management System***" << endl;
 	cout << endl; cout << endl;
 }
 void mainMenu() {
@@ -38,6 +39,7 @@ void mainMenu() {
 	cout << endl;
 }
 
+//spacing algining functions
 void space4() {
 	cout << "\t\t\t\t";
 }
@@ -60,10 +62,13 @@ void limitCheck_ID(int& number, int lowLimit, long long highLimit) {
 	}
 }
 
-void error_happen() {
-	space4(); cout << "Error in data files" << endl;
+void re_directed() {
 	space4(); cout << "You'll be directed to Main Menu in 2 seconds.";
 	Sleep(2000);
+}
+void error_happen() {
+	space4(); cout << "Error in data files" << endl;
+	re_directed();
 }
 void back() {
 	cout << endl;
@@ -78,10 +83,8 @@ void back() {
 
 bool is_empty_file(string file_name) {
 	ifstream file; file.open(file_name);
-
 	return (file.peek() == ifstream::traits_type::eof());
 }
-
 
 
 int main() {
@@ -119,43 +122,57 @@ Main_Menu:
 
 	//View all cars
 	if (choice1 == 1) {
-
 		header();
-		ifstream cars_file;
-		cars_file.open("Cars.txt");
 
-		if (cars_file.is_open()) {
-			string line;
-			while (getline(cars_file, line)) {
-				cout << line << endl;
-			}
-			back();
-			cars_file.close();
+		if (is_empty_file("Cars.txt") == true) {
+			space4(); cout << "No cars yet!" << endl;
+			re_directed();
 			goto Main_Menu;
 		}
 		else {
-			error_happen();
-			goto Main_Menu;
+			ifstream cars_file;
+			cars_file.open("Cars.txt");
+
+			if (cars_file.is_open()) {
+
+				// I'll use pointers and dynamic allocation for many short-term variables
+				string* line = new string;
+				while (getline(cars_file, *line)) {
+					cout << *line << endl;
+				}
+				delete line;
+
+				back();
+				cars_file.close();
+				goto Main_Menu;
+			}
+			else {
+				error_happen();
+				goto Main_Menu;
+			}
 		}
 	}
 
 	//Add a car
 	if (choice1 == 2) {
 		header();
-		Cars car_list[30];
+		Cars* car_list = new Cars[100];
 		ofstream cars_file;
 		cars_file.open("Cars.txt", ios_base::app);
 		if (cars_file.is_open()) {
 
 			// The table first row (if the text file is empty)
 			if (is_empty_file("Cars.txt")) {
-				cars_file << setw(25) << left << "Manufacture Company" << setw(25) << left << "Model"
-					<< setw(25) << left << "Release year" << setw(16) << left << "Cost" << setw(5) << left << "No." << endl;
+				cars_file << setw(25) << left << "Manufacture Company" <<
+					setw(25) << left << "Model" <<
+					setw(25) << left << "Release year" << 
+					setw(16) << left << "Cost" << 
+					setw(5) << left << "No." << endl;
 				cars_file << endl;
 			}
 
 			// Taking data from the manager
-			for (int j=0; j <= 30; ++ j) {
+			for (short j=0; j <= 99; ++ j) {
 				cin.ignore(1000, '\n');
 				space4(); cout << "Name of manufacturing company : ";
 				string carCompany; getline(cin, carCompany);
@@ -168,8 +185,8 @@ Main_Menu:
 				cout << endl;
 
 				space4(); cout << "Cost : ";
-				int cost; cin >> cost; limitCheck(cost, 50000, 5000000);
-				//assuming no car - in the exhibition - is less than 50k or more than 5m
+				//assuming no car - in the exhibition - is less than 20k or more than 5m
+				int cost; cin >> cost; limitCheck(cost, 20000, 5000000);
 				car_list[j].price = cost;
 				cout << endl;
 
@@ -183,9 +200,11 @@ Main_Menu:
 				car_list[j].number = carNumber;
 				cout << endl;
 
-				cars_file << setw(25) << left << car_list[j].car_company << setw(25) << left << car_list[j].car_model
-					<< setw(25) << left << car_list[j].release_year << setw(16) << left << car_list[j].price
-					<< setw(5) << left << car_list[j].number << endl;
+				cars_file << setw(25) << left << car_list[j].car_company <<
+					setw(25) << left << car_list[j].car_model << 
+					setw(25) << left << car_list[j].release_year << 
+					setw(16) << left << car_list[j].price << 
+					setw(5) << left << car_list[j].number << endl;
 
 				space4(); cout << "Add another car (Y/N) ? : ";
 				char more_choice;
@@ -211,25 +230,28 @@ Main_Menu:
 			error_happen();
 			goto Main_Menu;
 		}
+
+		delete[] car_list;
 	}
 
 	//Search for a car
 	if (choice1 == 3) {
 		header();
-		cout << "\t\t\t";  cout << "Enter any info about the car you want to search for (model/company) : ";
-		string search_word;
-		cin >> search_word;
+		cout << "\t\t\t";  cout << "Enter any info about the car you want to search for : ";
+		string search_word; cin >> search_word;
 
 		ifstream cars_file;
 		cars_file.open("Cars.txt");
 
 		if (cars_file.is_open()) {
-			string line;
-			while (getline(cars_file, line)) {
-				if (line.find(search_word) != string::npos ) {
-					cout << line << endl;
+			string* line = new string;
+			while (getline(cars_file, *line)) {
+				if ((*line).find(search_word) != string::npos ) {
+					cout << *line << endl;
 				}
 			}
+			delete line;
+
 			back();
 			goto Main_Menu;
 		}
@@ -244,21 +266,31 @@ Main_Menu:
 	if (choice1 == 4) {
 		header();
 
-		ifstream sales_file;
-		sales_file.open("Sales.txt");
-
-		if (sales_file.is_open()) {
-			string line;
-			while (getline(sales_file, line)) {
-				cout << line << endl;
-			}
-			back();
-			sales_file.close();
+		if (is_empty_file("Sales.txt") == true) {
+			space4(); cout << "No sales yet!" << endl;
+			re_directed();
 			goto Main_Menu;
 		}
 		else {
-			error_happen();
-			goto Main_Menu;
+			ifstream sales_file;
+			sales_file.open("Sales.txt");
+
+			if (sales_file.is_open()) {
+
+				string* line = new string;
+				while (getline(sales_file, *line)) {
+					cout << *line << endl;
+				}
+				delete line;
+
+				back();
+				sales_file.close();
+				goto Main_Menu;
+			}
+			else {
+				error_happen();
+				goto Main_Menu;
+			}
 		}
 	}
 
@@ -266,7 +298,8 @@ Main_Menu:
 	if (choice1 == 5) {
 		header();
 
-		Sales sale_list[30];
+		//Sales sale_list[30];
+		Sales* sale_list = new Sales[100];
 		ofstream sales_file;
 		sales_file.open("Sales.txt", ios_base::app);
 
@@ -274,35 +307,53 @@ Main_Menu:
 
 			// The table first row (if the text file is empty)
 			if (is_empty_file("Sales.txt")) {
-				sales_file << setw(30) << left << "Client Name" << setw(30) << left << "Car Info" << setw(20) << left << "Date"
-					<< setw(20) << left << "Time" << endl;
+				sales_file << setw(30) << left << "Client Name" <<
+					setw(10) << left << "Company" <<
+					setw(10) << left << "Model" << 
+					setw(10) << left << "Release year" <<
+					setw(15) << left << "Date" <<
+					setw(15) << left << "Time" << endl;
 				sales_file << endl;
 			}
 
-			for (int j=0 ; j <= 29; ++j) {
+			for (short j=0 ; j <= 99; ++j) {
 				cin.ignore(1000, '\n');
 				space4(); cout << "Client name : ";
 				string clientName; getline(cin, clientName);
 				sale_list[j].client_name = clientName;
 				cout << endl;
 
-				space4(); cout << "Car Info (company,model,release year) : ";
-				string soldCarInfo; getline(cin, soldCarInfo);
-				sale_list[j].sold_car_info = soldCarInfo;
+				space4(); cout << "Car Company : ";
+				string soldCarCompany; getline(cin, soldCarCompany);
+				sale_list[j].sold_car_company = soldCarCompany;
 				cout << endl;
 
-				space4(); cout << "Date (day/month/year) : ";
+				space4(); cout << "Car Model : ";
+				string soldCarModel; getline(cin, soldCarModel);
+				sale_list[j].sold_car_model = soldCarModel;
+				cout << endl;
+
+				space4(); cout << "Release year : ";
+				string soldCarReleaseYear; getline(cin, soldCarReleaseYear);
+				sale_list[j].sold_car_release_year = soldCarReleaseYear;
+				cout << endl;
+
+				space4(); cout << "Date : ";
 				string date; getline(cin, date);
 				sale_list[j].date = date;
 				cout << endl;
 
-				space4(); cout << "Time (hour:minute) : ";
+				space4(); cout << "Time : ";
 				string time; getline(cin, time);
 				sale_list[j].time = time;
 				cout << endl;
 
-				sales_file << setw(30) << left << sale_list[j].client_name << setw(30) << left << sale_list[j].sold_car_info
-					<< setw(20) << left << sale_list[j].date << setw(20) << left << sale_list[j].time << endl;
+				sales_file << setw(30) << left << sale_list[j].client_name <<
+					setw(10) << left << sale_list[j].sold_car_company <<
+					setw(10) << left << sale_list[j].sold_car_model <<
+					setw(10) << left << sale_list[j].sold_car_release_year <<
+					setw(15) << left << sale_list[j].date <<
+					setw(15) << left << sale_list[j].time << endl;
 
 				space4(); cout << "Add another sale (Y/N) ? : ";
 				char more_choice;
@@ -328,27 +379,37 @@ Main_Menu:
 			error_happen();
 			goto Main_Menu;
 		}
+		delete[] sale_list;
 	}
 
 	// View all employees info
 	if (choice1 == 6) {
 		header();
 
-		ifstream employees_file;
-		employees_file.open("Employees.txt");
-
-		if (employees_file.is_open()) {
-			string line;
-			while (getline(employees_file, line)) {
-				cout << line << endl;
-			}
-			back();
-			employees_file.close();
+		if (is_empty_file("Employees.txt") == true) {
+			space4(); cout << "No employees yet!" << endl;
+			re_directed();
 			goto Main_Menu;
 		}
 		else {
-			error_happen();
-			goto Main_Menu;
+			ifstream employees_file;
+			employees_file.open("Employees.txt");
+
+			if (employees_file.is_open()) {
+				string* line = new string;
+				while (getline(employees_file, *line)) {
+					cout << *line << endl;
+				}
+				delete line;
+
+				back();
+				employees_file.close();
+				goto Main_Menu;
+			}
+			else {
+				error_happen();
+				goto Main_Menu;
+			}
 		}
 	}
 
@@ -356,7 +417,7 @@ Main_Menu:
 	if (choice1 == 7) {
 		header();
 
-		Employees employee_list[30];
+		Employees *employee_list= new Employees[100];
 		ofstream employees_file;
 		employees_file.open("Employees.txt");
 
@@ -364,12 +425,14 @@ Main_Menu:
 
 			// The table first row (if the text file is empty)
 			if (is_empty_file("Employees.txt")) {
-				employees_file << setw(30) << left << "Full Name" << setw(15) << left << "National ID" << setw(25) << left << "Job position"
-					<< setw(10) << left << "Salary" << endl;
+				employees_file << setw(30) << left << "Full Name" <<
+					setw(15) << left << "National ID" <<
+					setw(25) << left << "Job position" <<
+					setw(10) << left << "Salary" << endl;
 				employees_file << endl;
 			}
 
-			for (int i = 1; i <= 31; ++i) {
+			for (short i = 0; i <= 99; ++i) {
 				cin.ignore(1000, '\n');
 				space4(); cout << "Full name of the employee : ";
 				string fullName; getline(cin, fullName);
@@ -394,8 +457,10 @@ Main_Menu:
 				employee_list[i].salary = salary;
 				cout << endl;
 
-				employees_file << setw(30) << left << employee_list[i].full_name << setw(15) << left << employee_list[i].id << setw(25)
-					<< left << employee_list[i].job << setw(10) << left << employee_list[i].salary << endl;
+				employees_file << setw(30) << left << employee_list[i].full_name <<
+					setw(15) << left << employee_list[i].id <<
+					setw(25) << left << employee_list[i].job <<
+					setw(10) << left << employee_list[i].salary << endl;
 
 				space4(); cout << "Add another employee (Y/N) ? : ";
 				char more_choice;
@@ -421,6 +486,7 @@ Main_Menu:
 			error_happen();
 			goto Main_Menu;
 		}
+		delete[] employee_list;
 	}
 
 	// Remove an employee's info
@@ -502,10 +568,10 @@ Main_Menu:
 		employees_file.open("Employees.txt");
 
 		if (employees_file.is_open()) {
-			string line;
-			while (getline(employees_file, line)) {
-				if (line.find(search_word) != string::npos ) {
-					cout << line << endl;
+			string* line = new string;
+			while (getline(employees_file, *line)) {
+				if ((*line).find(search_word) != string::npos ) {
+					cout << *line << endl;
 				}
 			}
 			back();
@@ -542,5 +608,3 @@ Main_Menu:
 		return 0;
 	}
 }
-
-// Osama Muhammad
