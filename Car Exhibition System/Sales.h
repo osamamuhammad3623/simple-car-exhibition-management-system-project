@@ -10,6 +10,7 @@ struct Sales {
 	string sold_car_company;
 	string sold_car_model;
 	string sold_car_release_year;
+	short price{};
 	string date;
 	string time;
 	
