@@ -1,4 +1,1 @@
-Full Name                     National ID    Job position             Salary    
 
-em 1                          111            job 1                    5000      
-em 2                          112            job 2                    6500      
