@@ -8,8 +8,8 @@ struct Cars {
 
 	string car_company;
 	string car_model;
-	int price{};
-	int release_year{};
-	int number{};
+	short price{};
+	short release_year{};
+	short number{};
 
 };
