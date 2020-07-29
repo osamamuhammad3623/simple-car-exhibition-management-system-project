@@ -9,6 +9,6 @@ struct Employees {
 	string full_name;
 	int id{};
 	string job;
-	short salary{};
+	int salary{};
 
 };
