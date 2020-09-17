@@ -30,3 +30,5 @@
 - Client name.
 - Sold car info.
 - Date and time of sale.
+
+*Youtube link: https://youtu.be/itA8Gt7ZMZo
