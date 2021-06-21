@@ -107,3 +107,21 @@ void change_password(){
 	password_file_new.close();
 	space(4); cout << "New password is saved !" << endl;
 }
+
+void acceptValidInput(){
+	char addOneMore;
+	cin >> addOneMore;
+	while (addOneMore != 'Y' && addOneMore != 'y' && addOneMore != 'N' && addOneMore != 'n') {
+		space(4); cout << "Enter a valid option : ";
+		cin >> addOneMore;
+	}
+	if (addOneMore == 'Y' || addOneMore == 'y') {
+		cout << endl;
+	}
+	else {
+		cout << endl;
+		space(4);
+		cout << "You'll be directed to Main Menu.";
+		Sleep(2000);
+	}
+}

@@ -15,5 +15,6 @@ void error_happen() ;
 void back();
 bool is_empty_file(string file_name);
 void change_password();
+void acceptValidInput();
 
 #endif

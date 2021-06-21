@@ -4,8 +4,8 @@
 
 using namespace std;
 
-
-
+void viewCars();
+void addCars();
 
 struct Cars {
 	string car_company;
