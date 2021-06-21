@@ -39,7 +39,7 @@ void fillTableHeader(ofstream* cars_file){
 
 void addCars(){
     Cars* car_list = new Cars[100];
-	ofstream* cars_file;
+	ofstream* cars_file = new ofstream();
 	(*cars_file).open("Cars.txt", ios_base::app);
 
 	if ((*cars_file).is_open()) {
@@ -48,7 +48,10 @@ void addCars(){
 		}
 
 		// Taking data from the manager
-		for (short j=0; j <= 99; ++ j) {
+		space(4); cout << "How many cars do you want to add : ";
+		int n; cin >> n;
+		
+		for (short j=0; j <n; ++ j) {
 			cin.ignore(1000, '\n');
 			space(4); cout << "Name of manufacturing company : ";
 			string carCompany; getline(cin, carCompany);
@@ -82,8 +85,6 @@ void addCars(){
 			setw(16) << left << car_list[j].price << 
 			setw(5) << left << car_list[j].number << endl;
 
-			space(4); cout << "Add another car (Y/N) ? : ";
-			acceptValidInput();
 		}
 		(*cars_file).close();
 	}

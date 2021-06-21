@@ -170,7 +170,6 @@ int main() {
 						setw(15) << left << sale_list[j].time << endl;
 
 					space(4); cout << "Add another sale (Y/N) ? : ";
-					acceptValidInput();
 				}
 				sales_file.close();
 			}

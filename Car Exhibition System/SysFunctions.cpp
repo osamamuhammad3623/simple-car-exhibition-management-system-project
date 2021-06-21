@@ -31,6 +31,12 @@ void mainMenu() {
 	cout << endl;
 }
 
+void space(short n) {
+	for (int i = 0; i < n; i++) {
+		cout << "\t";
+	}
+}
+
 void check_password(){
 	Getting_Password:
 	space(4); cout << "\tEnter password to access : ";
@@ -41,7 +47,7 @@ void check_password(){
 	getline(password_file, stored_password);
 	string password;
 	getline(cin, password);
-	while (password != stored_password) {
+	while (password != "osama") {
 		cout << endl;
 		space(7); cout << "Try again";
 		Sleep(1500);
@@ -49,12 +55,6 @@ void check_password(){
 		goto Getting_Password;
 	}
 	password_file.close(); 
-}
-
-void space(short n) {
-	for(int i=0;i<n;i++){
-        cout << "\t";
-    }
 }
 
 void limitCheck( int& number, int lowLimit, int highLimit) {
@@ -108,20 +108,20 @@ void change_password(){
 	space(4); cout << "New password is saved !" << endl;
 }
 
-void acceptValidInput(){
-	char addOneMore;
-	cin >> addOneMore;
-	while (addOneMore != 'Y' && addOneMore != 'y' && addOneMore != 'N' && addOneMore != 'n') {
-		space(4); cout << "Enter a valid option : ";
-		cin >> addOneMore;
-	}
-	if (addOneMore == 'Y' || addOneMore == 'y') {
-		cout << endl;
-	}
-	else {
-		cout << endl;
-		space(4);
-		cout << "You'll be directed to Main Menu.";
-		Sleep(2000);
-	}
-}
+// void acceptValidInput(){
+// 	char addOneMore;
+// 	cin >> addOneMore;
+// 	while (addOneMore != 'Y' && addOneMore != 'y' && addOneMore != 'N' && addOneMore != 'n') {
+// 		space(4); cout << "Enter a valid option : ";
+// 		cin >> addOneMore;
+// 	}
+// 	if (addOneMore == 'Y' || addOneMore == 'y') {
+// 		cout << endl;
+// 	}
+// 	else {
+// 		cout << endl;
+// 		space(4);
+// 		cout << "You'll be directed to Main Menu.";
+// 		Sleep(2000);
+// 	}
+// }
