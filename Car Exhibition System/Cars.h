@@ -1,15 +1,16 @@
 #include <iostream>
 #include <string>
-#include "Windows.h"
+#include "SysFunctions.h"
 
 using namespace std;
 
-struct Cars {
 
+
+
+struct Cars {
 	string car_company;
 	string car_model;
 	int price{};
 	int release_year{};
 	int number{};
-
 };
