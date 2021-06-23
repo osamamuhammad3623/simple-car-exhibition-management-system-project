@@ -38,7 +38,16 @@ int main() {
 		//Add a car
 		if (option == 2) {
 			header();
-			addCars();
+			ofstream *cars_file = new ofstream();
+
+			(*cars_file).open("Cars.txt", ios_base::app);
+
+			if ((*cars_file).is_open()){
+				addCars(cars_file);
+			}
+			else{
+				error_happen();
+			}
 		}
 
 		//Search for a car
@@ -47,26 +56,16 @@ int main() {
 			cout << "\t\t\t";  cout << "Enter any info about the car you want to search for : ";
 			string search_word; cin >> search_word;
 
-			ifstream cars_file;
-			cars_file.open("Cars.txt");
+			ifstream *cars_file = new ifstream();
+			(*cars_file).open("Cars.txt");
 
-			if (cars_file.is_open()) {
-				string* line = new string;
-				while (getline(cars_file, *line)) {
-					if ((*line).find(search_word) != string::npos ) {
-						cout << *line << endl;
-					}
-				}
-				delete line;
-
-				back();
-				continue;
+			if ((*cars_file).is_open()) {
+				searchForCars(cars_file, search_word);
 			}
 			else {
 				error_happen();
-				continue;
 			}
-			cars_file.close();
+			(*cars_file).close();
 		}
 
 		//View all sales

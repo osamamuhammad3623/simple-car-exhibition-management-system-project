@@ -5,7 +5,8 @@
 using namespace std;
 
 void viewCars();
-void addCars();
+void addCars(ofstream *cars_file);
+void searchForCars(ifstream *cars_file, string search_word);
 
 struct Cars {
 	string car_company;
