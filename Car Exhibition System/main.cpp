@@ -78,25 +78,7 @@ int main() {
 				continue;
 			}
 			else {
-				ifstream sales_file;
-				sales_file.open("Sales.txt");
-
-				if (sales_file.is_open()) {
-
-					string* line = new string;
-					while (getline(sales_file, *line)) {
-						cout << *line << endl;
-					}
-					delete line;
-
-					back();
-					sales_file.close();
-					continue;
-				}
-				else {
-					error_happen();
-					continue;
-				}
+				viewSales();
 			}
 		}
 
@@ -104,79 +86,16 @@ int main() {
 		if (option == 5) {
 			header();
 
-			//Sales sale_list[30];
-			Sales* sale_list = new Sales[100];
-			ofstream sales_file;
-			sales_file.open("Sales.txt", ios_base::app);
+			ofstream *sales_file = new ofstream();
 
-			if (sales_file.is_open()) {
+			(*sales_file).open("Sales.txt", ios_base::app);
 
-				// The table first row (if the text file is empty)
-				if (is_empty_file("Sales.txt")) {
-					sales_file << setw(30) << left << "Client Name" <<
-						setw(10) << left << "Company" <<
-						setw(10) << left << "Model" << 
-						setw(10) << left << "Release year" <<
-						setw(10) << left << "Price" <<
-						setw(15) << left << "Date" <<
-						setw(15) << left << "Time" << endl;
-					sales_file << endl;
-				}
-
-				for (short j=0 ; j <= 99; ++j) {
-					cin.ignore(1000, '\n');
-					space(4); cout << "Client name : ";
-					string clientName; getline(cin, clientName);
-					sale_list[j].client_name = clientName;
-					cout << endl;
-
-					space(4); cout << "Car Company : ";
-					string soldCarCompany; getline(cin, soldCarCompany);
-					sale_list[j].sold_car_company = soldCarCompany;
-					cout << endl;
-
-					space(4); cout << "Car Model : ";
-					string soldCarModel; getline(cin, soldCarModel);
-					sale_list[j].sold_car_model = soldCarModel;
-					cout << endl;
-
-					space(4); cout << "Release year : ";
-					string soldCarReleaseYear; getline(cin, soldCarReleaseYear);
-					sale_list[j].sold_car_release_year = soldCarReleaseYear;
-					cout << endl;
-					
-					space(4); cout << "Price : ";
-					short price; cin >> price;
-					sale_list[j].price = price;
-					cout << endl;
-					
-					space(4); cout << "Date : ";
-					string date; getline(cin, date);
-					sale_list[j].date = date;
-					cout << endl;
-
-					space(4); cout << "Time : ";
-					string time; getline(cin, time);
-					sale_list[j].time = time;
-					cout << endl;
-
-					sales_file << setw(30) << left << sale_list[j].client_name <<
-						setw(10) << left << sale_list[j].sold_car_company <<
-						setw(10) << left << sale_list[j].sold_car_model <<
-						setw(10) << left << sale_list[j].sold_car_release_year <<
-						setw(10) << left << sale_list[j].price <<
-						setw(15) << left << sale_list[j].date <<
-						setw(15) << left << sale_list[j].time << endl;
-
-					space(4); cout << "Add another sale (Y/N) ? : ";
-				}
-				sales_file.close();
+			if ((*sales_file).is_open()){
+				addSales(sales_file);
 			}
-			else {
+			else{
 				error_happen();
-				continue;
 			}
-			delete[] sale_list;
 		}
 
 		// View all employees info
@@ -189,24 +108,7 @@ int main() {
 				continue;
 			}
 			else {
-				ifstream employees_file;
-				employees_file.open("Employees.txt");
-
-				if (employees_file.is_open()) {
-					string* line = new string;
-					while (getline(employees_file, *line)) {
-						cout << *line << endl;
-					}
-					delete line;
-
-					back();
-					employees_file.close();
-					continue;
-				}
-				else {
-					error_happen();
-					continue;
-				}
+				viewEmployees();
 			}
 		}
 
@@ -394,5 +296,4 @@ int main() {
 			return 0;
 		}
 	}
-
 }

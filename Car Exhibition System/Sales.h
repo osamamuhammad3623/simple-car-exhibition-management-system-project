@@ -4,8 +4,10 @@
 
 using namespace std;
 
-struct Sales {
+void viewSales();
+void addSales(ofstream *sales_file);
 
+struct Sales {
 	string client_name;
 	string sold_car_company;
 	string sold_car_model;
@@ -13,5 +15,4 @@ struct Sales {
 	int price{};
 	string date;
 	string time;
-	
 };

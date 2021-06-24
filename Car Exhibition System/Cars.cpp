@@ -53,7 +53,6 @@ void addCars(ofstream *cars_file)
 	vector <Cars> car_list= vector<Cars>(n);
 	for (short j = 0; j < n; ++j)
 	{
-		cin.ignore(1000, '\n');
 		space(4);
 		cout << "Name of manufacturing company : ";
 		string carCompany;
